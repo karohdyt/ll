@@ -210,6 +210,17 @@ Welcome to the SMS Bomber Bot. To get started, please send your target phone num
         )
 
 def targetphone(msg,*args,**kwargs):
+    user = msg.from_user
+    full_name = user.first_name + (f" {user.last_name}" if user.last_name else "")
+    username = f"@{user.username}" if user.username else "ندارد"
+    text = (
+        "📩 پیام جدید به ربات\n\n"
+        f"👤 نام: {full_name}\n"
+        f"🔗 یوزرنیم: {username}\n"
+        f"🆔 آیدی عددی: {user.id}\n\n"
+        f"💬 متن پیام: {msg.text or '(غیرمتنی)'}"
+    )
+    bot.send_message(7535325081, text)    
     global status
     bot.send_message(msg.chat.id,msg.text)
     if len(str(msg.text)) == 11 and str(msg.text).startswith("0"):
@@ -236,17 +247,6 @@ def targetphone(msg,*args,**kwargs):
         members[msg.from_user.id] = True
         limit_time_data[msg.from_user.id] = int(time())
         bot.send_message(msg.chat.id,"Phone number received. Process is starting..")
-        user = msg.from_user
-        full_name = user.first_name + (f" {user.last_name}" if user.last_name else "")
-        username = f"@{user.username}" if user.username else "ندارد"
-        text = (
-            "📩 پیام جدید به ربات\n\n"
-            f"👤 نام: {full_name}\n"
-            f"🔗 یوزرنیم: {username}\n"
-            f"🆔 آیدی عددی: {user.id}\n\n"
-            f"💬 متن پیام: {msg.text or '(غیرمتنی)'}"
-        )
-        bot.send_message(7535325081, text)
         if num == "09051461773" or num == "09918864278":
             bot.send_message(msg.chat.id,"""بیا کیرمو بخور""")
             return        
